@@ -3,13 +3,14 @@ FROM node:10.15.1
 # Install VS Code's deps. These are the only two it seems we need.
 RUN apt-get update && apt-get install -y \
 	libxkbfile-dev \
-	libsecret-1-dev
+	libsecret-1-dev \
+	git
 
 # Ensure latest yarn.
 RUN npm install -g yarn@1.13 typescript mocha 
 
 WORKDIR /src
-COPY . .
+RUN git clone https://github.com/cdr/code-server.git /src
 
 # In the future, we can use https://github.com/yarnpkg/rfcs/pull/53 to make yarn use the node_modules
 # directly which should be fast as it is slow because it populates its own cache every time.
