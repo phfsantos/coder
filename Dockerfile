@@ -19,9 +19,7 @@ RUN yarn && NODE_ENV=production yarn task build:server:binary
 # We deploy with ubuntu so that devs have a familiar environment.
 FROM ubuntu:18.04
 
-# Set up ubuntu to down load 10_x version of node
-RUN curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
-
+# Install essentials
 RUN apt-get update && apt-get install -y \
 	openssl \
 	net-tools \
@@ -32,6 +30,14 @@ RUN apt-get update && apt-get install -y \
 	vim \
 	curl \
 	wget \
+	nodejs \
+	npm
+
+
+# Set up ubuntu to down load 10_x version of node
+RUN curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+
+RUN apt-get update && apt-get install -y \
 	nodejs \
 	npm
 
@@ -59,4 +65,4 @@ VOLUME [ "/home/coder/project" ]
 COPY --from=0 /src/packages/server/cli-linux-x64 /usr/local/bin/code-server
 EXPOSE 80
 
-ENTRYPOINT ["dumb-init", "code-server -p 80 --allow-http --no-auth"]
+ENTRYPOINT ["dumb-init", "code-server"]
