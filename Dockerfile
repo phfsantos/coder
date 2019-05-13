@@ -29,10 +29,7 @@ RUN apt-get update && apt-get install -y \
 	dumb-init \
 	vim \
 	curl \
-	wget \
-	nodejs \
-	npm
-
+	wget
 
 # Set up ubuntu to down load 10_x version of node
 RUN curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
@@ -49,18 +46,14 @@ RUN locale-gen en_US.UTF-8
 # configured in /etc/default/locale so we need to set it manually.
 ENV LC_ALL=en_US.UTF-8
 
-RUN adduser --gecos '' --disabled-password coder && \
-	echo "coder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
-
-USER coder
 # We create first instead of just using WORKDIR as when WORKDIR creates, the user is root.
-RUN mkdir -p /home/coder/project
+RUN mkdir -p /root/project
 
-WORKDIR /home/coder/project
+WORKDIR /root/project
 
 # This assures we have a volume mounted even if the user forgot to do bind mount.
 # So that they do not lose their data if they delete the container.
-VOLUME [ "/home/coder/project" ]
+VOLUME [ "/root/project" ]
 
 COPY --from=0 /src/packages/server/cli-linux-x64 /usr/local/bin/code-server
 EXPOSE 80
