@@ -19,6 +19,9 @@ RUN yarn && NODE_ENV=production yarn task build:server:binary
 # We deploy with ubuntu so that devs have a familiar environment.
 FROM ubuntu:18.04
 
+# Set up ubuntu to down load 10_x version of node
+RUN curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+
 RUN apt-get update && apt-get install -y \
 	openssl \
 	net-tools \
@@ -28,7 +31,12 @@ RUN apt-get update && apt-get install -y \
 	dumb-init \
 	vim \
 	curl \
-	wget
+	wget \
+	nodejs \
+	npm
+
+# Install some global packages
+RUN npm install -g typescript mocha eslint
 
 RUN locale-gen en_US.UTF-8
 # We unfortunately cannot use update-locale because docker will not use the env variables

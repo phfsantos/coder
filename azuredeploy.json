@@ -19,7 +19,16 @@
       "metadata": {
         "description": "Login password"
       }
-    }      
+    }
+    "imageRegistryLoginServer": {
+        "type": "string"
+    },
+    "imageUsername": {
+        "type": "string"
+    },
+    "imagePassword": {
+        "type": "secureString"
+    },
   },
   "variables": {
     "containerName": "code-server",
@@ -76,6 +85,13 @@
             }
           ]
         },
+        "imageRegistryCredentials": [
+            {
+                "server": "[parameters('imageRegistryLoginServer')]",
+                "username": "[parameters('imageUsername')]",
+                "password": "[parameters('imagePassword')]"
+            }
+        ],
         "volumes": [{
           "name": "project-vol",
           "azureFile": {
