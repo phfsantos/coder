@@ -6,7 +6,7 @@ Run VS Code in a container using [https://coder.com/](https://github.com/coderco
 - Microsoft.ContainerInstance/containerGroups
 
 ### Quick Deploy
-[![deploy](https://raw.githubusercontent.com/benc-uk/azure-arm/master/etc/azuredeploy.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fphfsantos%2Fcoder%2Fmaster%2Fazuredeploy.json%3Ftoken%3DAAD63UWFE5AQ5IQASUATDJS43E3TC)  
+[![deploy](https://raw.githubusercontent.com/benc-uk/azure-arm/master/etc/azuredeploy.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fphfsantos%2Fcoder%2Fmaster%2Fazuredeploy.json%3Ftoken%3DAAD63UUPQVE4QNVFWU244LC43FEDE)  
 
 ### Parameters
 - `storageAcctName`: Storage account name, should hold two shares called `code-server-proj` and `code-server-data`
