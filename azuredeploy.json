@@ -69,7 +69,7 @@
                 },
                 {
                   "name": "bin-vol",
-                  "mountPath": "/usr/local/bin/"
+                  "mountPath": "/usr/local/lib/node_modules"
                 }
               ],
               "resources": {
