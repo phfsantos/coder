@@ -19,13 +19,13 @@
       "metadata": {
         "description": "Login password"
       }
-    }
+    },
     "imageRegistryLoginServer": {
         "type": "string"
     },
     "imageUsername": {
         "type": "string"
-    },
+    }
     "imagePassword": {
         "type": "secureString"
     },
@@ -35,8 +35,9 @@
     "containerDNS": "[concat(variables('containerName'), '-', uniqueString(subscription().subscriptionId))]",
     "image": "codercom/code-server",
     "port": "80",
-    "command-line": ["code-server", "--allow-http", "[concat('--password=', parameters('password'))]", "[concat('--port=', variables('port'))]"],
+    "command-line": ["sudo", "code-server", "--allow-http", "[concat('--password=', parameters('password'))]", "[concat('--port=', variables('port'))]"],
     "project-share": "code-server-proj",
+    "bin-share": "code-server-bin",
     "data-share": "code-server-data"
   },
   "resources": [
@@ -57,14 +58,20 @@
                   "port": "[variables('port')]"
                 }
               ],
-              "volumeMounts": [{
-                "name": "project-vol",
-                "mountPath": "/root/project"
-              },
-              {
-                "name": "data-vol",
-                "mountPath": "/root/.local/share/code-server"
-              }],
+              "volumeMounts": [
+                {
+                  "name": "project-vol",
+                  "mountPath": "/root/project"
+                },
+                {
+                  "name": "data-vol",
+                  "mountPath": "/root/.local/share/code-server"
+                },
+                {
+                  "name": "bin-vol",
+                  "mountPath": "/usr/local/bin/"
+                }
+              ],
               "resources": {
                 "requests": {
                   "cpu": "1",
@@ -92,22 +99,32 @@
                 "password": "[parameters('imagePassword')]"
             }
         ],
-        "volumes": [{
-          "name": "project-vol",
-          "azureFile": {
-            "shareName": "[variables('project-share')]",
-            "storageAccountName": "[parameters('storageAcctName')]",
-            "storageAccountKey": "[parameters('storageAcctKey')]"
+        "volumes": [
+          {
+            "name": "project-vol",
+            "azureFile": {
+              "shareName": "[variables('project-share')]",
+              "storageAccountName": "[parameters('storageAcctName')]",
+              "storageAccountKey": "[parameters('storageAcctKey')]"
+            }
+          },
+          {
+            "name": "data-vol",
+            "azureFile": {
+              "shareName": "[variables('data-share')]",
+              "storageAccountName": "[parameters('storageAcctName')]",
+              "storageAccountKey": "[parameters('storageAcctKey')]"
+            }
+          },
+          {
+            "name": "bin-vol",
+            "azureFile": {
+              "shareName": "[variables('bin-share')]",
+              "storageAccountName": "[parameters('storageAcctName')]",
+              "storageAccountKey": "[parameters('storageAcctKey')]"
+            }
           }
-        },
-        {
-          "name": "data-vol",
-          "azureFile": {
-            "shareName": "[variables('data-share')]",
-            "storageAccountName": "[parameters('storageAcctName')]",
-            "storageAccountKey": "[parameters('storageAcctKey')]"
-          }
-        }]
+        ]
       }
     }
   ],
