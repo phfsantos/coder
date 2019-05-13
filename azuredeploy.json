@@ -28,12 +28,12 @@
     }
     "imagePassword": {
         "type": "secureString"
-    },
+    }
   },
   "variables": {
     "containerName": "code-server",
     "containerDNS": "[concat(variables('containerName'), '-', uniqueString(subscription().subscriptionId))]",
-    "image": "codercom/code-server",
+    "image": "ordepim/coder",
     "port": "80",
     "command-line": ["sudo", "code-server", "--allow-http", "[concat('--password=', parameters('password'))]", "[concat('--port=', variables('port'))]"],
     "project-share": "code-server-proj",
