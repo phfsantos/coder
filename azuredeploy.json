@@ -52,11 +52,7 @@
               "volumeMounts": [
                 {
                   "name": "project-vol",
-                  "mountPath": "/root/project"
-                },
-                {
-                  "name": "data-vol",
-                  "mountPath": "/root/.local/share/code-server"
+                  "mountPath": "/root/"
                 },
                 {
                   "name": "bin-vol",
@@ -88,14 +84,6 @@
             "name": "project-vol",
             "azureFile": {
               "shareName": "[variables('project-share')]",
-              "storageAccountName": "[parameters('storageAcctName')]",
-              "storageAccountKey": "[parameters('storageAcctKey')]"
-            }
-          },
-          {
-            "name": "data-vol",
-            "azureFile": {
-              "shareName": "[variables('data-share')]",
               "storageAccountName": "[parameters('storageAcctName')]",
               "storageAccountKey": "[parameters('storageAcctKey')]"
             }
